@@ -28,8 +28,8 @@ class UserService {
     async activate(activationLink) {
         const user = await UserModel.findOne({ activationLink })
         if (!user) {
-            throw new Error('Некоретная ссилка актівації')ж
-        }
+            throw new Error('Некоретная ссилка актівації');
+        };
         user.isActivated = true;
         await user.save();
     }
