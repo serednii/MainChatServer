@@ -23,7 +23,7 @@ app.use(errorMiddleware);// має іти послідній в списку
 const start = async () => {
     try {
         await mongoose.connect('mongodb+srv://seredniimykola:h5ZgrweHvwejowJY@test.2hvsgym.mongodb.net/jwt?retryWrites=true&w=majority&appName=test'), { useNewUrlParser: true, useUnifiedTopology: true };
-        app.listen(PORT, () => console.log('Server started on PORT ' + PORT))
+        app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}/graphql`))
     } catch (e) {
         console.log(e)
     }
