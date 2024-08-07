@@ -16,7 +16,7 @@ class UserService {
         const activationLink = uuid.v4();
 
         const user = await UserModel.create({ email, password: hashPassword, activationLink });
-        mailService.sendActivationMailPHP(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        // mailService.sendActivationMailPHP(email, `${process.env.API_URL}/api/activate/${activationLink}`);
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
