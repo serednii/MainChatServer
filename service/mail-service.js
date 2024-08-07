@@ -14,10 +14,10 @@ class MailService {
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *client
         }
-        this.mailPathUrl = process.env.PHP_MAIL
+        // this.mailPathUrl = process.env.PHP_MAIL
 
         this.data = {
-            admin_email: process.env.SMTP_USER,
+            // admin_email: process.env.SMTP_USER,
         }
     }
 
