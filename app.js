@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: [process.env.CLIENT_URL, process.env.CLIENT_URL1, process.env.CLIENT_URL2]
 }))
 
 app.use('/api', router);
@@ -23,7 +23,7 @@ app.use(errorMiddleware);// має іти послідній в списку
 const start = async () => {
     try {
         await mongoose.connect('mongodb+srv://seredniimykola:h5ZgrweHvwejowJY@test.2hvsgym.mongodb.net/jwt?retryWrites=true&w=majority&appName=test'), { useNewUrlParser: true, useUnifiedTopology: true };
-        app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}/graphql`))
+        app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`))
     } catch (e) {
         console.log(e)
     }
