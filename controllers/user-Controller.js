@@ -14,7 +14,9 @@ class UserController {
                 return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
             }
             const { email, password, userName, lastUserName } = req.body;
-
+            console.log('**********************LOGIN*****************')
+            console.log(email, password, userName, lastUserName)
+            console.log('**********************LOGIN*****************')
 
             const userData = await UserService.registration(email, password, userName, lastUserName);
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
@@ -22,6 +24,21 @@ class UserController {
         } catch (e) {
             console.log(e);
             next(e); // don't forget to call next with the error to handle it properly
+        }
+    }
+
+    async login(req, res, next) {
+        try {
+            const { email, password } = req.body;
+            console.log('**********************LOGIN*****************')
+            console.log(email, password)
+            console.log('**********************LOGIN*****************')
+
+            const userData = await UserService.login(email, password);
+            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+            return res.json(userData);
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -70,20 +87,7 @@ class UserController {
     }
 
 
-    async login(req, res, next) {
-        try {
-            const { email, password } = req.body;
-            console.log('**********************LOGIN*****************')
-            console.log(email, password)
-            console.log('**********************LOGIN*****************')
 
-            const userData = await UserService.login(email, password);
-            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
-            return res.json(userData);
-        } catch (e) {
-            next(e);
-        }
-    }
 
     async logout(req, res, next) {
         try {
