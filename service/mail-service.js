@@ -14,11 +14,11 @@ class MailService {
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *client
         }
-        // this.mailPathUrl = process.env.PHP_MAIL
-
+        this.mailPathUrl = process.env.PHP_MAIL
         this.data = {
             // admin_email: process.env.SMTP_USER,
         }
+
     }
 
     sendActivationMailPHP(user_email, link) {
@@ -30,7 +30,6 @@ class MailService {
         `
         this.data.link = link
         this.data.user_email = user_email;
-
         this.dataFetch.body = JSON.stringify(this.data)
 
         fetch(this.mailPathUrl, this.dataFetch)
@@ -47,7 +46,6 @@ class MailService {
                 console.log("Zpráva nebyla odeslána, došlo k chybě:  ");
                 console.error('Error:', error);
             });
-
 
     }
 

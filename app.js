@@ -24,10 +24,10 @@ app.use(cors({
 }));
 
 // GraphQL Middleware
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true, // Включення GraphiQL для зручності розробки
-}));
+// app.use('/graphql', graphqlHTTP({
+//     schema,
+//     graphiql: true, // Включення GraphiQL для зручності розробки
+// }));
 
 // API маршрути
 app.use('/api', router);

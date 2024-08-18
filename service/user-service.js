@@ -16,9 +16,33 @@ class UserService {
         const activationLink = uuid.v4();
 
         const user = await UserModel.create({ userName, lastUserName, email, password: hashPassword, activationLink });
-        // mailService.sendActivationMailPHP(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        mailService.sendActivationMailPHP(email, `${process.env.API_URL}/api/activate/${activationLink}`);
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({ ...userDto });
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        return {
+            ...tokens,
+            user: userDto
+        };
+    }
+
+    async login(email, password) {
+        // console.log('**********************LOGIN service*****************')
+        // console.log(email, password)
+        // console.log('**********************LOGIN service*****************')
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            throw ApiError.BadRequest('Неправильний  email або пароль');
+        }
+        const isPassEquals = await bcrypt.compare(password, user.password)
+        if (!isPassEquals) {
+            throw ApiError.BadRequest('Неправильний  email або пароль');
+        }
+        // console.log('**********************LOGIN service token*****************')
+        // console.log(email, password)
+        // console.log('**********************LOGIN service token*****************')
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
         return {
             ...tokens,
@@ -120,29 +144,7 @@ class UserService {
         await user.save();
     }
 
-    async login(email, password) {
-        console.log('**********************LOGIN service*****************')
-        console.log(email, password)
-        console.log('**********************LOGIN service*****************')
-        const user = await UserModel.findOne({ email });
-        if (!user) {
-            throw ApiError.BadRequest('Неправильний  email або пароль');
-        }
-        const isPassEquals = await bcrypt.compare(password, user.password)
-        if (!isPassEquals) {
-            throw ApiError.BadRequest('Неправильний  email або пароль');
-        }
-        console.log('**********************LOGIN service token*****************')
-        console.log(email, password)
-        console.log('**********************LOGIN service token*****************')
-        const userDto = new UserDto(user);
-        const tokens = tokenService.generateTokens({ ...userDto })
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        return {
-            ...tokens,
-            user: userDto
-        };
-    }
+
 
     async logout(refreshToken) {
         const token = await tokenService.removeToken(refreshToken)

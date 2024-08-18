@@ -6,17 +6,17 @@ const ApiError = require('../exceptions/api-error')
 class UserController {
     async registration(req, res, next) {
         try {
-            console.log('------------------')
-            console.log(req.body)
+            // console.log('------------------')
+            // console.log(req.body)
 
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
                 return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
             }
             const { email, password, userName, lastUserName } = req.body;
-            console.log('**********************LOGIN*****************')
-            console.log(email, password, userName, lastUserName)
-            console.log('**********************LOGIN*****************')
+            // console.log('**********************LOGIN*****************')
+            // console.log(email, password, userName, lastUserName)
+            // console.log('**********************LOGIN*****************')
 
             const userData = await UserService.registration(email, password, userName, lastUserName);
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
@@ -30,9 +30,9 @@ class UserController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
-            console.log('**********************LOGIN*****************')
-            console.log(email, password)
-            console.log('**********************LOGIN*****************')
+            // console.log('**********************LOGIN*****************')
+            // console.log(email, password)
+            // console.log('**********************LOGIN*****************')
 
             const userData = await UserService.login(email, password);
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });

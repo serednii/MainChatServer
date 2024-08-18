@@ -2,10 +2,10 @@ const graphql = require('graphql');
 const mongoose = require('mongoose');
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLList, GraphQLID } = graphql;
 const { GraphQLJSON } = require('graphql-type-json');
-const Menu = require('../modelsLink/Menu');
-const LinkItem = require('../modelsLink/LinkItem');
-const Article = require('../modelsLink/Article');
-const Link = require('../modelsLink/Link');
+const Menu = require('../models/Menu');
+const LinkItem = require('../models/LinkItem');
+const Article = require('../models/Article');
+const Link = require('../models/Link');
 
 const LinkType = new GraphQLObjectType({
     name: 'Link',
