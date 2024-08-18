@@ -13,7 +13,7 @@ router.post('/registration',
     userController.registration
 )
 
-router.post('/graphql', authMiddleware, graphqlHTTP({
+router.post('/graphql', graphqlHTTP({
     schema,
     graphiql: true, // Включення GraphiQL для зручності розробки
 }));
