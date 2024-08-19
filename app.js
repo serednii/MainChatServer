@@ -18,10 +18,11 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    credentials: true,
-    origin: [process.env.CLIENT_URL, process.env.CLIENT_URL1, process.env.CLIENT_URL2]
-}));
+// app.use(cors({
+//     credentials: true,
+//     origin: [process.env.CLIENT_URL, process.env.CLIENT_URL1, process.env.CLIENT_URL2]
+// }));
+app.use(cors());
 
 // GraphQL Middleware
 app.use('/graphql', graphqlHTTP({
