@@ -111,6 +111,8 @@ class UserController {
 
         console.log('**********************refresh*****************')
         console.log(req.body)
+        console.log(req.cookies)
+
         console.log('**********************refresh*****************')
         try {
             const { refreshToken } = req.cookies;
