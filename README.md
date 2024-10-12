@@ -1,7 +1,7 @@
 # JS SERVER
-- JWT Server 
-- Graphiql Server 
-- Socekt Server 
+- ## JWT Server 
+- ## Graphiql Data Server 
+- ## Socekt Server 
 
 
 # Dillinger
