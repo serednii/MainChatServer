@@ -1,9 +1,9 @@
 const Router = require('express').Router;
-const userController = require('../server_auth/controllers/user-Controller')
+const userController = require('../controllers/user-Controller')
 const { body } = require('express-validator');
-const authMiddleware = require('../server_auth/middlewares/auth-middleware')
+const authMiddleware = require('../middlewares/auth-middleware')
 const { graphqlHTTP } = require('express-graphql');
-const schema = require('../server_data/schemaLink/schemaLink');
+const schema = require('../../server_data/schemaLink/schemaLink');
 
 const router = new Router();
 
@@ -13,12 +13,7 @@ router.post('/registration',
     userController.registration
 )
 
-// router.post('/graphql', authMiddleware, graphqlHTTP({
-//     schema,
-//     graphiql: true, // Включення GraphiQL для зручності розробки
-// }));
-
-router.post('/graphql', graphqlHTTP({
+router.post('/graphql', authMiddleware, graphqlHTTP({
     schema,
     graphiql: true, // Включення GraphiQL для зручності розробки
 }));

@@ -4,10 +4,10 @@ const cors = require('cors');
 const { graphqlHTTP } = require('express-graphql');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const router = require('./router/index');
-const errorMiddleware = require('./middlewares/error-middleware');
-const schema = require('./schemaLink/schemaLink');
-const authMiddleware = require('./middlewares/auth-middleware');
+const router = require('./server_auth/router/index');
+const errorMiddleware = require('./server_auth/middlewares/error-middleware');
+const schema = require('./server_data/schemaLink/schemaLink');
+const authMiddleware = require('./server_auth/middlewares/auth-middleware');
 
 const PORT = process.env.PORT || 7000;
 const app = express();
@@ -17,17 +17,20 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(`Connection error: ${err}`));
 
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     credentials: true,
     origin: [process.env.CLIENT_URL, process.env.CLIENT_URL1, process.env.CLIENT_URL2]
 }));
-// app.use(cors());
 
 // GraphQL Middleware
-app.use('/graphql', authMiddleware, graphqlHTTP({
+// app.use('/graphql', authMiddleware, graphqlHTTP({
+//     schema,
+//     graphiql: true, // Включення GraphiQL для зручності розробки
+// }));
+
+app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true, // Включення GraphiQL для зручності розробки
 }));

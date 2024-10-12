@@ -1,4 +1,4 @@
-const UserModel = require("../models/user-model");
+const UserModel = require("../../server_data/models/user-model");
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const mailService = require('./mail-service');
